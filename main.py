@@ -7,7 +7,6 @@ SIZE = 200
 COLOR_GRID = (187, 173, 160)
 COLORS = [(205, 193, 180),(238, 228, 218),(237, 224, 200),(242, 177, 121),(245, 149, 99),(246, 124, 95),(246, 94, 59),(237, 207, 114),(237, 204, 97),(237, 200, 80),(237, 197, 63),(237, 194, 46)]
 
-
 board = np.zeros((4,4))
 score = 0
 
@@ -34,7 +33,8 @@ def check_possibilities():
     return False
 
 def add_cell():
-    next = random.randint(1,2)*2
+    next = random.randint(1,8)
+    next = 4 if next == 8 else 2
     new = random.choice(get_empty())
     board[new[0]][new[1]] = next
 
@@ -74,7 +74,7 @@ def display(screen, size):
             font_color = (119, 110, 101) if board[col][row] in [2.0,4.0] else (249, 246, 242)
             font = pygame.font.SysFont("Clear", 80)
             txt = font.render(str(int(board[col][row])), True, font_color)
-            screen.blit(txt, (row*size+((size-txt.get_height())//2),col*size+((size-txt.get_width())//2), size-10, size-10))
+            screen.blit(txt, (row*size+((size-txt.get_width()-10)/2),col*size+((size-txt.get_height()-10)/2)))
 
 def reset():
     for i, y in enumerate(board):
@@ -85,6 +85,7 @@ def reset():
 
 def main():
     pygame.init()
+    pygame.display.set_caption("2048")
     screen = pygame.display.set_mode((800,800))
     screen.fill(COLOR_GRID)
 
