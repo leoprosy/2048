@@ -1,14 +1,20 @@
-import numpy as np
-import random
-import pygame
-import math
+import setup
+while True:
+    try:
+        import numpy as np
+        import random
+        import pygame
+        import math
+        break
+    except ImportError:
+        setup.main()
+
+board = np.zeros((4,4))
+score = 0
 
 SIZE = 200
 COLOR_GRID = (187, 173, 160)
 COLORS = [(205, 193, 180),(238, 228, 218),(237, 224, 200),(242, 177, 121),(245, 149, 99),(246, 124, 95),(246, 94, 59),(237, 207, 114),(237, 204, 97),(237, 200, 80),(237, 197, 63),(237, 194, 46)]
-
-board = np.zeros((4,4))
-score = 0
 
 def get_empty():
     return [(i, j) for i, y in enumerate(board) for j, x in enumerate(y) if x==0]
@@ -112,10 +118,6 @@ def main():
                 if event.key == pygame.K_DOWN:
                     moves = move_cells(direction="b")
                     if moves > 0: add_cell()
-            # elif event.type == pygame.MOUSEBUTTONDOWN:
-            #     if event.button == 1:
-            #         if button.collidepoint(event.pos):
-            #             reset()
                         
 
         if len(get_empty()) == 0 and not check_possibilities():
@@ -123,7 +125,6 @@ def main():
             font = pygame.font.SysFont("Clear", 80)
             txt = font.render("Game Over!", True, (255,255,255))
             screen.blit(txt, ((screen.get_width() - txt.get_width())//2, (screen.get_height() - txt.get_height())//2, 400, 200))
-            # button = pygame.Rect(200,300, 400, 200)
         
         pygame.display.flip()
         pygame.display.update()
